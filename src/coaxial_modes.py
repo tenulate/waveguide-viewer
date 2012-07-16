@@ -1,11 +1,12 @@
 '''
-Created on 20/11/2010
-
-@author: Marko
+Classes, methods and variables for dealing with the waveguide modes of the 
+electric and magnetic fields propagating through a coaxial/(annulus) waveguide
 '''
 
-from errors import *    # my errors
-from interactive_plot import *    # my plotting functions
+# my errors
+from errors import NotGreaterThenZero, NotGreaterThenOne, \
+    NotGreaterThenOrEqualToOne                
+from interactive_plot import *      # my plotting functions
 
 # numpy stuff
 from numpy import array, arange, zeros, linspace, any, all
@@ -13,15 +14,16 @@ from numpy import pi, ndarray
 
 # plotting tools
 import matplotlib.pyplot as plt
-from matplotlib.pylab import suptitle
 
 # Bessel functions and derivatives
 from scipy.special import jn, yn, jvp, yvp
 from scipy.optimize import newton
 
 
-# Classes to contain wave guide mode information
+
 class TMmode:
+    '''Contain a single TM wave guide mode, and methods to calculate important 
+        quantitites'''
     
     mode = 'TM'
     
@@ -46,15 +48,15 @@ class TMmode:
         return "<%s mode>  m = %s, n = %s, c = %s" % (self.mode, self.m, self.n, self.c)
     
     def root_equation(self,m,c,x):
-        # Radial root equation of Phi for TM mode
+        'Radial root equation of Phi for TM mode'
         return yn(m,x)*jn(m,c*x)-jn(m,x)*yn(m,c*x)
     
     def chi(self,m,n,c):
-        # Guess the root chi_mn for TM mode
+        'Guess the root chi_mn for TM mode'
         return pi*n/(c-1.)
     
     def set_root(self, guess=None):
-        # Set the initial guess values for the root
+        'Set the initial guess values for the root'
         if guess is not None:
             self.root = guess
         # If no guess is provided use the Marcuvitz formula to calculate approximate root
@@ -62,7 +64,7 @@ class TMmode:
             self.root = self.chi(self.m, self.n, self.c)
                     
     def find_root(self):
-        # find root using Newton method
+        'find root using Newton method'
         f = lambda x: self.root_equation(self.m,self.c,x)
         try:
             self.root = newton(f, self.root, maxiter=100)
@@ -70,15 +72,15 @@ class TMmode:
             pass
             
     def marcuvitz(self):
-        # returns a string label and value for the root form tabulated in Marcuvitz
+        'returns a string label and value for the root form tabulated in Marcuvitz'
         label = '(c-1)*chi'
         root = (self.c-1.)*self.root
         return label, root
     
     def plot_root(self, ax=None, Npoints=500, color='red', size=6):
-        # plot calculated root
+        'plot calculated root'
         # convenient variables
-        m, c, root = self.m, self.c, self.root
+        m, n, c, root = self.m, self.n, self.c, self.root
         
         # if no axis is given, make a new plot
         if ax is None:
@@ -95,7 +97,7 @@ class TMmode:
         self.drag = DragRoot(root_line, f, label=label)
         
     def recalculate_root(self):
-        # from the root plot retrieve the estimated root
+        ' from the root plot retrieve the estimated root and recalculate it using '
         if self.drag is None: return
         
         new_guess = self.drag.get_xdata()
@@ -109,7 +111,7 @@ class TMmode:
         self.drag.set_ydata(new_y)
         
         # draw on this figure now
-        self.drag_roots.draw()
+        self.drag.draw()
         
     def plot_root_equation(self, ax=None, Npoints=400, 
                            color='blue', width=2, bcolor='red', bwidth=2):
