@@ -4,9 +4,9 @@ electric and magnetic fields propagating through a coaxial/(annulus) waveguide
 '''
 
 # my errors
-from errors import NotGreaterThenZero, NotGreaterThenOne, \
-    NotGreaterThenOrEqualToOne                
-from interactive_plot import *      # my plotting functions
+from waveguide_viewer_errors import NotGreaterThenZero, NotGreaterThenOne, NotGreaterThenOrEqualToOne                
+# my plotting functions
+from interactive_plot import DragRoot, RootZoomPlot
 
 # numpy stuff
 from numpy import array, arange, zeros, linspace, any, all
@@ -25,8 +25,6 @@ class TMmode:
     '''Contain a single TM wave guide mode, and methods to calculate important 
         quantitites'''
     
-    mode = 'TM'
-    
     def __init__(self,m,n,c):
         # make sure values are valid
         if m<0:
@@ -37,6 +35,7 @@ class TMmode:
             raise NotGreaterThenOne, 'c must be greater then 1'
         
         # save values to class variables
+        self.mode = 'TM'
         self.m = m      # Bessel function order
         self.n = n      # Root number of Bessel function
         self.c = c      # Ratio of outer to inner radius
@@ -77,7 +76,7 @@ class TMmode:
         root = (self.c-1.)*self.root
         return label, root
     
-    def plot_root(self, ax=None, Npoints=500, color='red', size=6):
+    def plot_root(self, ax=None, Npoints=500, color='red', size=8):
         'plot calculated root'
         # convenient variables
         m, n, c, root = self.m, self.n, self.c, self.root
@@ -95,6 +94,8 @@ class TMmode:
                         markerfacecolor=color, markersize=size)
         # make root draggable
         self.drag = DragRoot(root_line, f, label=label)
+        # draw the root
+        self.drag.draw()
         
     def recalculate_root(self):
         ' from the root plot retrieve the estimated root and recalculate it using '
@@ -115,13 +116,15 @@ class TMmode:
         
     def plot_root_equation(self, ax=None, Npoints=400, 
                            color='blue', width=2, bcolor='red', bwidth=2):
+        ''' Plot the radial root equation '''
+        
         # if no axis is given, make a new plot
         if ax is None:
             fig = plt.figure()
             ax = fig.add_subplot(111)
             
         # give a horizontal line indicating zero
-        ax.axhspan(0,0, linewidth=1, linestyle='dashed')
+        ax.axhline(0,0, linewidth=1, linestyle='dashed', color='black')
     
         # set up root function plot to have zoom function
         f = lambda x: self.root_equation(self.m, self.c, x)
@@ -129,19 +132,27 @@ class TMmode:
                         x_min=0, x_max=2*self.root,
                         border_width=bwidth, border_color=bcolor,
                         line_color=color, line_width=width)
+        # set the title for the new plot
+        ax.set_title('Radial root equation for %s$_{%d%d}$ mode (c = %.2f)'
+                     %(self.mode, self.m, self.n, self.c))
         # plot the root function (plot last so as to keep pretty y range)
         rootplot.plot()
         
-class TEmode(TMmode):
+class TEmode(TMmode, object):
+    '''Contain a single TE wave guide mode, and methods to calculate important 
+        quantitites'''
     
-    mode = 'TE'
+    def __init__(self,m,n,c):
+        # Initialize the super class
+        super(TEmode, self).__init__(m,n,c)
+        self.mode = 'TE'
     
     def root_equation(self,m,c,x):
-        # Radial root equation of Phi for TE mode
+        '''Radial root equation of Phi for TE mode'''
         return yvp(m,x,1)*jvp(m,c*x,1)-jvp(m,x,1)*yvp(m,c*x,1)
     
     def chi(self,m,n,c):
-        # Guess the root chi_mn for TE mode
+        '''Guess the root chi_mn for TE mode'''
         if m==0:
             return pi*n/(c-1.)
         elif m!=0 and n==1:
@@ -150,7 +161,7 @@ class TEmode(TMmode):
             return pi*(n-1.)/(c-1.)
             
     def marcuvitz(self):
-        # returns a string label and value for the root form tabulated in Marcuvitz
+        '''returns a string label and value for the root form tabulated in Marcuvitz'''
         if self.n==1 and self.m!=0:
             label = '(c+1)*chi'
             root = (self.c+1.)*self.root
