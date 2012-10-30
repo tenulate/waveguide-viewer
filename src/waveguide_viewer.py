@@ -17,6 +17,7 @@ from PyQt4 import QtCore
 # Python Qt4 bindings for GUI objects
 from PyQt4 import QtGui
 
+    
 class WaveGuideViewer(QtGui.QMainWindow, Ui_WaveguideViewer_MainWindow):
     '''Integrate Qt designer created window with program logic'''
     
@@ -27,31 +28,58 @@ class WaveGuideViewer(QtGui.QMainWindow, Ui_WaveguideViewer_MainWindow):
         self.setupUi(self)
         
         # canvas / axis / figures
-        self.canvas = self.mpl_rootFinder.canvas
-        self.ax = self.canvas.ax
+        self.root_canvas = self.mpl_rootFinder.canvas
+        self.root_fig = self.root_canvas.fig
+        self.root_ax = self.root_canvas.ax
+        self.field_canvas = self.mpl_fieldplot.canvas
+        self.field_fig = self.field_canvas.fig
+        self.field_ax = self.field_canvas.ax
         
         # set up the initial wave guide mode
         self.set_waveguide_mode()
         self.plot_root()
         
         # connect the signals and slots (buttons with functions)
-        QtCore.QObject.connect(self.recalculateRoot_pushButton, QtCore.
-                               SIGNAL('clicked()'), self.click_recalculate_root)
-        QtCore.QObject.connect(self.mode_OKButton, 
-                               QtCore.SIGNAL('clicked()'), self.click_mode_ok)
+        
+        # Mode selector window
+        # When pressing "OK" and "Cancel" 
+        QtCore.QObject.connect(self.mode_OKButton, QtCore.
+                               SIGNAL('clicked()'), self.click_mode_ok)
         QtCore.QObject.connect(self.mode_CancelButton, QtCore.
                                SIGNAL('clicked()'), self.click_mode_cancel)
+                
+        # Root Calculator window
+        # when pressing "recalculate root" 
+        QtCore.QObject.connect(self.recalculateRoot_pushButton, QtCore.
+                               SIGNAL('clicked()'), self.click_recalculate_root)
+        # when pressing "enter" after editing the x range values 
+        QtCore.QObject.connect(self.rootMinX_lineEdit, QtCore.
+                               SIGNAL('returnPressed()'), self.set_new_x_range)
+        QtCore.QObject.connect(self.rootMaxX_lineEdit, QtCore.
+                               SIGNAL('returnPressed()'), self.set_new_x_range)
+        # When sliding the Y value bar 
+        QtCore.QObject.connect(self.rootYRange_verticalSlider, QtCore.
+                               SIGNAL('valueChanged(int)'), self.slide_yvalue_root)
+        # "Less / More X axis points" button
+        QtCore.QObject.connect(self.lessXPoints_pushButton, QtCore.
+                               SIGNAL('clicked()'), self.click_less_x_points)
+        QtCore.QObject.connect(self.moreXPoints_pushButton, QtCore.
+                               SIGNAL('clicked()'), self.click_more_x_points)
+        
+        # Field plotting window
+        QtCore.QObject.connect(self.recalculateRoot_pushButton, QtCore.
+                               SIGNAL('clicked()'), self.plot_field)
+        QtCore.QObject.connect(self.E_field_checkBox, QtCore.
+                               SIGNAL('stateChanged(int)'), self.click_field_checkbox)
+        QtCore.QObject.connect(self.H_field_checkBox, QtCore.
+                               SIGNAL('stateChanged(int)'), self.click_field_checkbox)
+                
+        # change the open tabbed window
+        self.tabWidget.setCurrentIndex(0)
         
     def set_waveguide_mode(self):
         ''' using the m, n and c values the user has selected from the spin boxes,
             saves the waveguide mode '''
-        
-        try:
-            del(self.mode)
-            print self.mode
-            print 'hi'
-        except:
-            pass
         
         m = self.m_spinBox.value()
         n = self.n_spinBox.value()
@@ -67,17 +95,105 @@ class WaveGuideViewer(QtGui.QMainWindow, Ui_WaveguideViewer_MainWindow):
     
     def plot_root(self):
         ''' plots the radial root equation in the root equation axis '''
-        self.ax.clear()
-        self.mode.plot_root_equation(self.ax)
-        self.mode.plot_root(self.ax)
+        self.root_ax.clear()
+        self.mode.plot_root(self.root_ax)
+        self.mode.plot_root_equation(self.root_ax)
+        # save the axis y range
+        self.root_ymin, self.root_ymax = self.root_ax.get_ylim()
+        self.root_xmin, self.root_xmax = self.root_ax.get_xlim()
+        
+        # update the minimum / maximum x text
+        self.rootMinX_lineEdit.setText(str(self.root_xmin))
+        self.rootMaxX_lineEdit.setText(str(self.root_xmax))
     
+    def slide_yvalue_root(self):
+        ''' when vertical slide bar is moved, update the y-range 
+            want the y range to change exponentially so that we can easily range
+            from say 10^(-5) to 10^(2) easily'''
+        
+        # we want to map the slider values (s) to 10^(y) values 
+        # in a way so that smin -> 10^(ymin), smax -> 10^(ymax)
+        min_s = float(self.rootYRange_verticalSlider.minimum())
+        max_s = float(self.rootYRange_verticalSlider.maximum())
+        ds = max_s-min_s
+        # work in log scale
+        log_max_y = 3
+        log_min_y = -7
+        d_log_y = log_max_y-log_min_y
+        
+        # slider value (s)
+        s = self.rootYRange_verticalSlider.value()
+        log_range_factor = d_log_y * (s-min_s) / ds + log_min_y
+        ymin, ymax = 10**(log_range_factor) * np.array([self.root_ymin, 
+                                                     self.root_ymax])
+        self.root_ax.set_ylim(ymin, ymax)
+        self.root_canvas.draw()
+        
+    def set_new_x_range(self):
+        ''' set a new x range in the root plot '''
+        
+        # convert the line edit text to a float and set new range
+        try:
+            x_min = float(self.rootMinX_lineEdit.text())
+            x_max = float(self.rootMaxX_lineEdit.text())
+            self.mode.rootplot.set_xlim(x_min, x_max)
+        # if can't convert text to float, return line edit to previous value
+        except ValueError:
+            x_min, x_max = self.root_ax.get_xlim()
+            self.rootMinX_lineEdit.setText(str(x_min))
+            self.rootMaxX_lineEdit.setText(str(x_max))
+            
+    def plot_field(self):
+        ''' plot the field in the matplotlib axis '''
+        self.field_ax.clear()
+        self.mode.plot_field(self.field_ax, n_phi=50)
+        self.field_canvas.draw()
+         
     def click_recalculate_root(self):
         ''' what to do when recalculate root is clicked '''
         self.mode.recalculate_root()
-        self.plot_root()
+        self.mode.drag.draw()
         
+    def click_more_x_points(self):
+        ''' what to do when "more x points" button is clicked in root calculator '''
+        
+        n = self.mode.rootplot.Npoints
+        upper_limit = 2**12
+        # if "less" button is not enabled, enable it
+        if not self.lessXPoints_pushButton.isEnabled():
+            self.lessXPoints_pushButton.setEnabled(True)
+        # if n is too high set upper bound
+        if n >= upper_limit:
+            self.mode.rootplot.set_Npoints(upper_limit)
+            # don't allow more button presses
+            self.moreXPoints_pushButton.setEnabled(False)
+        else:
+            self.mode.rootplot.set_Npoints(2*n)
+        
+        self.mode.rootplot.plot()
+        
+    def click_less_x_points(self):
+        ''' what to do when "less x points" button is clicked in root calculator '''
+        
+        n = self.mode.rootplot.Npoints
+        lower_limit = 4
+        
+        # if "more" button is not enabled, enable it
+        if not self.moreXPoints_pushButton.isEnabled():
+            self.moreXPoints_pushButton.setEnabled(True)
+        # if n is too low set lower bound
+        if n <= lower_limit:
+            self.mode.rootplot.set_Npoints(lower_limit)
+            # don't allow more button presses
+            self.lessXPoints_pushButton.setEnabled(False)
+        else:
+            self.mode.rootplot.set_Npoints(int(n/2))
+        
+        self.mode.rootplot.plot()
+                
     def click_mode_ok(self):
-        ''' what to do when clicking "OK" for the mode selection screen '''
+        ''' what to do when clicking "OK" for the mode selection screen 
+            - change current mode information, goto plot to find root'''
         
         # disconnect the previous signal / slot for the old mode
         QtCore.QObject.disconnect(self.recalculateRoot_pushButton, 
@@ -117,6 +233,24 @@ class WaveGuideViewer(QtGui.QMainWindow, Ui_WaveguideViewer_MainWindow):
         else:
             self.mode_comboBox.setCurrentIndex(2)
         
+    def click_field_checkbox(self):
+        ''' what to do when clicking on the E_field and H_field check boxes in the
+            field plot window. 
+        '''
+        # If E field is checked then the Electric field should be displayed 
+        # (set its quiver to visible)
+        if self.E_field_checkBox.isChecked():
+            self.mode.E_field.set_visible(True)
+        else:
+            self.mode.E_field.set_visible(False)
+        # Likewise with H_field
+        if self.H_field_checkBox.isChecked():
+            self.mode.H_field.set_visible(True)
+        else:
+            self.mode.H_field.set_visible(False)
+        
+        
+        self.field_canvas.draw()
           
 if __name__ == '__main__':
     # create the GUI application

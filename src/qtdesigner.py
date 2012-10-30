@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'waveguide viewer.ui'
 #
-# Created: Tue Jul 17 00:00:53 2012
+# Created: Tue Oct 30 21:54:00 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@ except AttributeError:
 class Ui_WaveguideViewer_MainWindow(object):
     def setupUi(self, WaveguideViewer_MainWindow):
         WaveguideViewer_MainWindow.setObjectName(_fromUtf8("WaveguideViewer_MainWindow"))
-        WaveguideViewer_MainWindow.resize(825, 618)
+        WaveguideViewer_MainWindow.resize(827, 690)
         self.centralwidget = QtGui.QWidget(WaveguideViewer_MainWindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
         self.verticalLayout = QtGui.QVBoxLayout(self.centralwidget)
@@ -40,6 +40,10 @@ class Ui_WaveguideViewer_MainWindow(object):
         self.horizontalLayout.addWidget(self.textBrowser)
         self.verticalLayout_3 = QtGui.QVBoxLayout()
         self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
+        self.label_6 = QtGui.QLabel(self.selectMode_tab)
+        self.label_6.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft)
+        self.label_6.setObjectName(_fromUtf8("label_6"))
+        self.verticalLayout_3.addWidget(self.label_6)
         self.mode_comboBox = QtGui.QComboBox(self.selectMode_tab)
         self.mode_comboBox.setObjectName(_fromUtf8("mode_comboBox"))
         self.mode_comboBox.addItem(_fromUtf8(""))
@@ -57,6 +61,7 @@ class Ui_WaveguideViewer_MainWindow(object):
         sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
         self.label.setSizePolicy(sizePolicy)
         self.label.setMinimumSize(QtCore.QSize(20, 0))
+        self.label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.label.setObjectName(_fromUtf8("label"))
         self.horizontalLayout_2.addWidget(self.label)
         self.m_spinBox = QtGui.QSpinBox(self.selectMode_tab)
@@ -74,6 +79,7 @@ class Ui_WaveguideViewer_MainWindow(object):
         sizePolicy.setHeightForWidth(self.label_2.sizePolicy().hasHeightForWidth())
         self.label_2.setSizePolicy(sizePolicy)
         self.label_2.setMinimumSize(QtCore.QSize(20, 0))
+        self.label_2.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.label_2.setObjectName(_fromUtf8("label_2"))
         self.horizontalLayout_2.addWidget(self.label_2)
         self.n_spinBox = QtGui.QSpinBox(self.selectMode_tab)
@@ -97,6 +103,7 @@ class Ui_WaveguideViewer_MainWindow(object):
         sizePolicy.setHeightForWidth(self.label_3.sizePolicy().hasHeightForWidth())
         self.label_3.setSizePolicy(sizePolicy)
         self.label_3.setMinimumSize(QtCore.QSize(20, 0))
+        self.label_3.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.label_3.setObjectName(_fromUtf8("label_3"))
         self.horizontalLayout_2.addWidget(self.label_3)
         self.c_doubleSpinBox = QtGui.QDoubleSpinBox(self.selectMode_tab)
@@ -165,26 +172,66 @@ class Ui_WaveguideViewer_MainWindow(object):
         self.verticalLayout_4.setObjectName(_fromUtf8("verticalLayout_4"))
         self.horizontalLayout_9 = QtGui.QHBoxLayout()
         self.horizontalLayout_9.setObjectName(_fromUtf8("horizontalLayout_9"))
-        self.verticalSlider = QtGui.QSlider(self.tab_2)
-        self.verticalSlider.setMaximum(100)
-        self.verticalSlider.setSliderPosition(50)
-        self.verticalSlider.setOrientation(QtCore.Qt.Vertical)
-        self.verticalSlider.setInvertedAppearance(False)
-        self.verticalSlider.setObjectName(_fromUtf8("verticalSlider"))
-        self.horizontalLayout_9.addWidget(self.verticalSlider)
+        self.verticalLayout_2 = QtGui.QVBoxLayout()
+        self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
+        self.pushButton = QtGui.QPushButton(self.tab_2)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton.sizePolicy().hasHeightForWidth())
+        self.pushButton.setSizePolicy(sizePolicy)
+        self.pushButton.setMinimumSize(QtCore.QSize(20, 20))
+        self.pushButton.setMaximumSize(QtCore.QSize(20, 20))
+        self.pushButton.setObjectName(_fromUtf8("pushButton"))
+        self.verticalLayout_2.addWidget(self.pushButton)
+        self.rootYRange_verticalSlider = QtGui.QSlider(self.tab_2)
+        self.rootYRange_verticalSlider.setMinimum(0)
+        self.rootYRange_verticalSlider.setMaximum(100)
+        self.rootYRange_verticalSlider.setProperty("value", 66)
+        self.rootYRange_verticalSlider.setSliderPosition(66)
+        self.rootYRange_verticalSlider.setOrientation(QtCore.Qt.Vertical)
+        self.rootYRange_verticalSlider.setInvertedAppearance(False)
+        self.rootYRange_verticalSlider.setObjectName(_fromUtf8("rootYRange_verticalSlider"))
+        self.verticalLayout_2.addWidget(self.rootYRange_verticalSlider)
+        self.pushButton_4 = QtGui.QPushButton(self.tab_2)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_4.sizePolicy().hasHeightForWidth())
+        self.pushButton_4.setSizePolicy(sizePolicy)
+        self.pushButton_4.setMinimumSize(QtCore.QSize(20, 20))
+        self.pushButton_4.setMaximumSize(QtCore.QSize(20, 20))
+        self.pushButton_4.setObjectName(_fromUtf8("pushButton_4"))
+        self.verticalLayout_2.addWidget(self.pushButton_4)
+        self.horizontalLayout_9.addLayout(self.verticalLayout_2)
         self.mpl_rootFinder = MplWidget(self.tab_2)
         self.mpl_rootFinder.setMinimumSize(QtCore.QSize(500, 500))
         self.mpl_rootFinder.setObjectName(_fromUtf8("mpl_rootFinder"))
         self.horizontalLayout_9.addWidget(self.mpl_rootFinder)
         self.verticalLayout_4.addLayout(self.horizontalLayout_9)
+        self.horizontalLayout_4 = QtGui.QHBoxLayout()
+        self.horizontalLayout_4.setObjectName(_fromUtf8("horizontalLayout_4"))
+        self.label_4 = QtGui.QLabel(self.tab_2)
+        self.label_4.setObjectName(_fromUtf8("label_4"))
+        self.horizontalLayout_4.addWidget(self.label_4)
+        self.rootMinX_lineEdit = QtGui.QLineEdit(self.tab_2)
+        self.rootMinX_lineEdit.setObjectName(_fromUtf8("rootMinX_lineEdit"))
+        self.horizontalLayout_4.addWidget(self.rootMinX_lineEdit)
+        self.label_5 = QtGui.QLabel(self.tab_2)
+        self.label_5.setObjectName(_fromUtf8("label_5"))
+        self.horizontalLayout_4.addWidget(self.label_5)
+        self.rootMaxX_lineEdit = QtGui.QLineEdit(self.tab_2)
+        self.rootMaxX_lineEdit.setObjectName(_fromUtf8("rootMaxX_lineEdit"))
+        self.horizontalLayout_4.addWidget(self.rootMaxX_lineEdit)
+        self.verticalLayout_4.addLayout(self.horizontalLayout_4)
         self.horizontalLayout_6 = QtGui.QHBoxLayout()
         self.horizontalLayout_6.setObjectName(_fromUtf8("horizontalLayout_6"))
-        self.pushButton_3 = QtGui.QPushButton(self.tab_2)
-        self.pushButton_3.setObjectName(_fromUtf8("pushButton_3"))
-        self.horizontalLayout_6.addWidget(self.pushButton_3)
-        self.pushButton_2 = QtGui.QPushButton(self.tab_2)
-        self.pushButton_2.setObjectName(_fromUtf8("pushButton_2"))
-        self.horizontalLayout_6.addWidget(self.pushButton_2)
+        self.lessXPoints_pushButton = QtGui.QPushButton(self.tab_2)
+        self.lessXPoints_pushButton.setObjectName(_fromUtf8("lessXPoints_pushButton"))
+        self.horizontalLayout_6.addWidget(self.lessXPoints_pushButton)
+        self.moreXPoints_pushButton = QtGui.QPushButton(self.tab_2)
+        self.moreXPoints_pushButton.setObjectName(_fromUtf8("moreXPoints_pushButton"))
+        self.horizontalLayout_6.addWidget(self.moreXPoints_pushButton)
         spacerItem9 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_6.addItem(spacerItem9)
         self.recalculateRoot_pushButton = QtGui.QPushButton(self.tab_2)
@@ -195,16 +242,50 @@ class Ui_WaveguideViewer_MainWindow(object):
         self.tabWidget.addTab(self.tab_2, _fromUtf8(""))
         self.tab = QtGui.QWidget()
         self.tab.setObjectName(_fromUtf8("tab"))
+        self.horizontalLayout_3 = QtGui.QHBoxLayout(self.tab)
+        self.horizontalLayout_3.setObjectName(_fromUtf8("horizontalLayout_3"))
+        self.verticalLayout_7 = QtGui.QVBoxLayout()
+        self.verticalLayout_7.setObjectName(_fromUtf8("verticalLayout_7"))
+        self.textBrowser_3 = QtGui.QTextBrowser(self.tab)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.textBrowser_3.sizePolicy().hasHeightForWidth())
+        self.textBrowser_3.setSizePolicy(sizePolicy)
+        self.textBrowser_3.setMinimumSize(QtCore.QSize(0, 10))
+        self.textBrowser_3.setMaximumSize(QtCore.QSize(256, 100))
+        self.textBrowser_3.setObjectName(_fromUtf8("textBrowser_3"))
+        self.verticalLayout_7.addWidget(self.textBrowser_3)
+        self.E_field_checkBox = QtGui.QCheckBox(self.tab)
+        self.E_field_checkBox.setChecked(True)
+        self.E_field_checkBox.setObjectName(_fromUtf8("E_field_checkBox"))
+        self.verticalLayout_7.addWidget(self.E_field_checkBox)
+        self.H_field_checkBox = QtGui.QCheckBox(self.tab)
+        self.H_field_checkBox.setChecked(True)
+        self.H_field_checkBox.setTristate(False)
+        self.H_field_checkBox.setObjectName(_fromUtf8("H_field_checkBox"))
+        self.verticalLayout_7.addWidget(self.H_field_checkBox)
+        spacerItem10 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_7.addItem(spacerItem10)
+        self.horizontalLayout_3.addLayout(self.verticalLayout_7)
+        self.mpl_fieldplot = MplWidget(self.tab)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.MinimumExpanding, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.mpl_fieldplot.sizePolicy().hasHeightForWidth())
+        self.mpl_fieldplot.setSizePolicy(sizePolicy)
+        self.mpl_fieldplot.setObjectName(_fromUtf8("mpl_fieldplot"))
+        self.horizontalLayout_3.addWidget(self.mpl_fieldplot)
         self.tabWidget.addTab(self.tab, _fromUtf8(""))
         self.verticalLayout.addWidget(self.tabWidget)
         WaveguideViewer_MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(WaveguideViewer_MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 825, 25))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 827, 25))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         WaveguideViewer_MainWindow.setMenuBar(self.menubar)
 
         self.retranslateUi(WaveguideViewer_MainWindow)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(WaveguideViewer_MainWindow)
 
     def retranslateUi(self, WaveguideViewer_MainWindow):
@@ -213,22 +294,22 @@ class Ui_WaveguideViewer_MainWindow(object):
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Select your waveguide mode:</span></p>\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Select waveguide mode:</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Modes in a coaxial waveguide come in 3 types</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">TE</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">The </span><span style=\" font-size:10pt; font-style:italic;\">electric field</span><span style=\" font-size:10pt;\"> is tansverse to the direction of the wave</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">TM</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-style:italic;\">Magnetic field</span><span style=\" font-size:10pt;\"> is transverse</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">TEM</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Both the </span><span style=\" font-size:10pt; font-style:italic;\">electric and magnetic fields</span><span style=\" font-size:10pt;\"> are transverse</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Modes in a coaxial waveguide come in 3 flavours</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">TE (Transverse Electric)</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">The </span><span style=\" font-size:10pt; font-style:italic;\">electric field</span><span style=\" font-size:10pt;\"> is tansverse to the direction of the traveling wave (</span><span style=\" font-size:10pt; font-weight:600;\">k</span><span style=\" font-size:10pt;\">)</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">TM (Transverse Magnetic)</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-style:italic;\">Magnetic field</span><span style=\" font-size:10pt;\"> is transverse to </span><span style=\" font-size:10pt; font-weight:600;\">k</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">TEM (Transverse Electric/Magnetic)</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Both the </span><span style=\" font-size:10pt; font-style:italic;\">electric and magnetic fields</span><span style=\" font-size:10pt;\"> are transverse to </span><span style=\" font-size:10pt; font-weight:600;\">k</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Each type (excluding TEM) has infinitely many modes, referred to by its </span><span style=\" font-size:10pt; font-weight:600;\">m and n</span><span style=\" font-size:10pt;\"> values.</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Each type of mode (excluding TEM) has infinitely many modes, refered to by their </span><span style=\" font-size:10pt; font-weight:600;\">m and n</span><span style=\" font-size:10pt;\"> values.</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">m</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Number of nodes (zeros of field) around the circumference of annulus </span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">There are </span><span style=\" font-size:10pt; font-weight:600;\">2m </span><span style=\" font-size:10pt;\">nodes (where the field is zero) around the circumference of the annulus </span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-style:italic;\">(m = 0,1,2,3...)</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">n</span><span style=\" font-size:10pt;\"> </span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Number of nodes minus one, from inner to outter radius </span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">There are</span><span style=\" font-size:10pt; font-weight:600;\"> n-1</span><span style=\" font-size:10pt;\"> nodes from the inner to outter radius </span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-style:italic;\">(n = 1,2,3,4...)</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">c</span></p>\n"
@@ -236,9 +317,10 @@ class Ui_WaveguideViewer_MainWindow(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">(c &gt; 1)</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.mode_comboBox.setItemText(0, QtGui.QApplication.translate("WaveguideViewer_MainWindow", "TE (Transverse Electric)", None, QtGui.QApplication.UnicodeUTF8))
-        self.mode_comboBox.setItemText(1, QtGui.QApplication.translate("WaveguideViewer_MainWindow", "TM (Transverse Magnetic)", None, QtGui.QApplication.UnicodeUTF8))
-        self.mode_comboBox.setItemText(2, QtGui.QApplication.translate("WaveguideViewer_MainWindow", "TEM (Transverse Electric-Magnetic)", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_6.setText(QtGui.QApplication.translate("WaveguideViewer_MainWindow", "Waveguide Mode Type:", None, QtGui.QApplication.UnicodeUTF8))
+        self.mode_comboBox.setItemText(0, QtGui.QApplication.translate("WaveguideViewer_MainWindow", "Transverse Electric (TE)", None, QtGui.QApplication.UnicodeUTF8))
+        self.mode_comboBox.setItemText(1, QtGui.QApplication.translate("WaveguideViewer_MainWindow", "Transverse Magnetic (TM)", None, QtGui.QApplication.UnicodeUTF8))
+        self.mode_comboBox.setItemText(2, QtGui.QApplication.translate("WaveguideViewer_MainWindow", "Transverse Electric-Magnetic (TEM)", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("WaveguideViewer_MainWindow", "m", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("WaveguideViewer_MainWindow", "n", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("WaveguideViewer_MainWindow", "c", None, QtGui.QApplication.UnicodeUTF8))
@@ -255,10 +337,23 @@ class Ui_WaveguideViewer_MainWindow(object):
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">For a given value of </span><span style=\" font-size:10pt; font-weight:600;\">n</span><span style=\" font-size:10pt;\">, </span><span style=\" font-size:10pt; font-style:italic;\">chi</span><span style=\" font-size:10pt;\"> should be the n</span><span style=\" font-size:10pt; vertical-align:super;\">th</span><span style=\" font-size:10pt;\"> root of the graph. </span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Click and drag the root of the graph to correct it, then click &quot;recalculate root&quot;</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_3.setText(QtGui.QApplication.translate("WaveguideViewer_MainWindow", "Less X-Axis Points", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_2.setText(QtGui.QApplication.translate("WaveguideViewer_MainWindow", "More X-Axis points", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton.setText(QtGui.QApplication.translate("WaveguideViewer_MainWindow", "+", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_4.setText(QtGui.QApplication.translate("WaveguideViewer_MainWindow", "-", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_4.setText(QtGui.QApplication.translate("WaveguideViewer_MainWindow", "min x", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_5.setText(QtGui.QApplication.translate("WaveguideViewer_MainWindow", "max x", None, QtGui.QApplication.UnicodeUTF8))
+        self.lessXPoints_pushButton.setText(QtGui.QApplication.translate("WaveguideViewer_MainWindow", "Less X-Axis Points", None, QtGui.QApplication.UnicodeUTF8))
+        self.moreXPoints_pushButton.setText(QtGui.QApplication.translate("WaveguideViewer_MainWindow", "More X-Axis points", None, QtGui.QApplication.UnicodeUTF8))
         self.recalculateRoot_pushButton.setText(QtGui.QApplication.translate("WaveguideViewer_MainWindow", "Recalculate Root", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QtGui.QApplication.translate("WaveguideViewer_MainWindow", "Calculate Root", None, QtGui.QApplication.UnicodeUTF8))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QtGui.QApplication.translate("WaveguideViewer_MainWindow", "Page", None, QtGui.QApplication.UnicodeUTF8))
+        self.textBrowser_3.setHtml(QtGui.QApplication.translate("WaveguideViewer_MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Field Plot</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Electric Field Vector plot</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.E_field_checkBox.setText(QtGui.QApplication.translate("WaveguideViewer_MainWindow", "Electric Field", None, QtGui.QApplication.UnicodeUTF8))
+        self.H_field_checkBox.setText(QtGui.QApplication.translate("WaveguideViewer_MainWindow", "Magnetic Field", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QtGui.QApplication.translate("WaveguideViewer_MainWindow", "Field Plot", None, QtGui.QApplication.UnicodeUTF8))
 
 from mplwidget import MplWidget
