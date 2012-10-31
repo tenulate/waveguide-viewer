@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'waveguide viewer.ui'
 #
-# Created: Tue Oct 30 21:54:00 2012
+# Created: Thu Nov  1 00:04:35 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -265,8 +265,39 @@ class Ui_WaveguideViewer_MainWindow(object):
         self.H_field_checkBox.setTristate(False)
         self.H_field_checkBox.setObjectName(_fromUtf8("H_field_checkBox"))
         self.verticalLayout_7.addWidget(self.H_field_checkBox)
-        spacerItem10 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        spacerItem10 = QtGui.QSpacerItem(20, 20, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Fixed)
         self.verticalLayout_7.addItem(spacerItem10)
+        self.horizontalLayout_8 = QtGui.QHBoxLayout()
+        self.horizontalLayout_8.setObjectName(_fromUtf8("horizontalLayout_8"))
+        self.label_7 = QtGui.QLabel(self.tab)
+        self.label_7.setObjectName(_fromUtf8("label_7"))
+        self.horizontalLayout_8.addWidget(self.label_7)
+        self.n_rho_spinBox = QtGui.QSpinBox(self.tab)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.n_rho_spinBox.sizePolicy().hasHeightForWidth())
+        self.n_rho_spinBox.setSizePolicy(sizePolicy)
+        self.n_rho_spinBox.setMinimum(1)
+        self.n_rho_spinBox.setMaximum(100)
+        self.n_rho_spinBox.setProperty("value", 20)
+        self.n_rho_spinBox.setObjectName(_fromUtf8("n_rho_spinBox"))
+        self.horizontalLayout_8.addWidget(self.n_rho_spinBox)
+        self.verticalLayout_7.addLayout(self.horizontalLayout_8)
+        self.horizontalLayout_11 = QtGui.QHBoxLayout()
+        self.horizontalLayout_11.setObjectName(_fromUtf8("horizontalLayout_11"))
+        self.label_8 = QtGui.QLabel(self.tab)
+        self.label_8.setObjectName(_fromUtf8("label_8"))
+        self.horizontalLayout_11.addWidget(self.label_8)
+        self.n_phi_spinBox = QtGui.QSpinBox(self.tab)
+        self.n_phi_spinBox.setMinimum(1)
+        self.n_phi_spinBox.setMaximum(100)
+        self.n_phi_spinBox.setProperty("value", 60)
+        self.n_phi_spinBox.setObjectName(_fromUtf8("n_phi_spinBox"))
+        self.horizontalLayout_11.addWidget(self.n_phi_spinBox)
+        self.verticalLayout_7.addLayout(self.horizontalLayout_11)
+        spacerItem11 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_7.addItem(spacerItem11)
         self.horizontalLayout_3.addLayout(self.verticalLayout_7)
         self.mpl_fieldplot = MplWidget(self.tab)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.MinimumExpanding, QtGui.QSizePolicy.Preferred)
@@ -354,6 +385,8 @@ class Ui_WaveguideViewer_MainWindow(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Electric Field Vector plot</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.E_field_checkBox.setText(QtGui.QApplication.translate("WaveguideViewer_MainWindow", "Electric Field", None, QtGui.QApplication.UnicodeUTF8))
         self.H_field_checkBox.setText(QtGui.QApplication.translate("WaveguideViewer_MainWindow", "Magnetic Field", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_7.setText(QtGui.QApplication.translate("WaveguideViewer_MainWindow", "Number of radial points", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_8.setText(QtGui.QApplication.translate("WaveguideViewer_MainWindow", "Number of angle points", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QtGui.QApplication.translate("WaveguideViewer_MainWindow", "Field Plot", None, QtGui.QApplication.UnicodeUTF8))
 
 from mplwidget import MplWidget

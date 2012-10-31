@@ -7,6 +7,7 @@ import numpy as np
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='polar')
+ax.set_title('hello world')
 
 # ratio of outter radius to inner radius
 ratio = 3.

@@ -73,6 +73,10 @@ class WaveGuideViewer(QtGui.QMainWindow, Ui_WaveguideViewer_MainWindow):
                                SIGNAL('stateChanged(int)'), self.click_field_checkbox)
         QtCore.QObject.connect(self.H_field_checkBox, QtCore.
                                SIGNAL('stateChanged(int)'), self.click_field_checkbox)
+        QtCore.QObject.connect(self.n_phi_spinBox, QtCore.
+                               SIGNAL('valueChanged(int)'), self.plot_field)
+        QtCore.QObject.connect(self.n_rho_spinBox, QtCore.
+                               SIGNAL('valueChanged(int)'), self.plot_field)
                 
         # change the open tabbed window
         self.tabWidget.setCurrentIndex(0)
@@ -146,7 +150,9 @@ class WaveGuideViewer(QtGui.QMainWindow, Ui_WaveguideViewer_MainWindow):
     def plot_field(self):
         ''' plot the field in the matplotlib axis '''
         self.field_ax.clear()
-        self.mode.plot_field(self.field_ax, n_phi=50)
+        n_phi = self.n_phi_spinBox.value()
+        n_rho = self.n_rho_spinBox.value()
+        self.mode.plot_field(self.field_ax, n_rho=n_rho, n_phi=n_phi)
         self.field_canvas.draw()
          
     def click_recalculate_root(self):

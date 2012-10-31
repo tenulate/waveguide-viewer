@@ -194,7 +194,7 @@ class TMmode:
         # plot the root function (plot last so as to keep pretty y range)
         self.rootplot.plot()
         
-    def plot_field(self, ax, E_color='red', H_color='green', n_rho=10, n_phi=100):
+    def plot_field(self, ax, E_color='red', H_color='green', n_rho=15, n_phi=60):
         ''' plots H field into ax (matplotlib.Axes class) 
             n_rho = number of different rho(radial) points to use
             n_phi = number of different phi(polar angle) points to use'''
@@ -208,6 +208,7 @@ class TMmode:
             fig.clear()
             
         ax = fig.add_subplot(111, projection='polar')
+        ax.set_title('%s %i,%i mode'%(self.mode, self.m, self.n))
                         
         a = 1
         b = a*self.c
@@ -239,12 +240,6 @@ class TMmode:
         self.H_field = ax.quiver(PHI,RHO,H_x(RHO,PHI),H_y(RHO,PHI), color=H_color)
         # get rid of the radial and polar ticks
         ax.set_thetagrids([]), ax.set_rticks([])
-        
-        # testing: plot the E_rho at the inner and outer radius
-        print "outer radius Erho" 
-        print E_phi(b,phi).max()
-        print "inner radius Erho"
-        print E_phi(a,phi).max()
         
 class TEmode(TMmode, object):
     '''Contain a single TE wave guide mode, and methods to calculate important 
