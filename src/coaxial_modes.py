@@ -23,10 +23,11 @@ from scipy.optimize import newton
 # Wavelength of light (m)
 LAMBDA = 1e-6
 
-C = 2.99792458e8    # speed of light (m s-1)
-K = 2*pi/LAMBDA     # wavenumber k (m-1)
-OMEGA = C*K         # Waveguide Frequency (s-1)
-MU = 1.25663706e-6  # the magnetic constant (m kg s-2 A-2)
+C = 2.99792458e8            # speed of light (m s-1)
+K = 2*pi/LAMBDA             # wavenumber k (m-1)
+OMEGA = C*K                 # Waveguide Frequency (s-1)
+MU = 1.25663706e-6          # the magnetic constant (m kg s-2 A-2)
+EPSILON = 8.85418782e-12    # permittivity of free space (m-3 kg-1 s4 A2)
 
 
 class TMmode:
@@ -48,6 +49,7 @@ class TMmode:
         self.n = n      # Root number of Bessel function
         self.c = c      # Ratio of outer to inner radius 
         self.root = 0   # root of equation
+        self.kz = 0     # z component of the wavenumber k
         self.set_root() # sets initial root to something reasonable
         self.drag = None    # information to drag root in plot
         self.E_field = None # The quiver / arrow plot of the Electric field
@@ -71,33 +73,34 @@ class TMmode:
         # jvp(m,x,r) is the rth derivative of the bessel function of order m evaluated at x
         return yn(m,chi)*jvp(m,x,1)-jn(m,chi)*yvp(m,x,1)
     
-    def kz(self):
+    def update_kz(self):
         ''' wave number (2 pi lambda)^-1 in z direction '''
-        # NB c is ratio of outer radius to inner radius c=a/b. 
-        # In plots we will take inner radius (a) to be 1, therefore b = 1/c
+        # NB c is ratio of outer radius to inner radius c=b/a
+        # In plots we will take inner radius (a) to be 1, therefore b = c
         # kz^2 = k^2-(chi/b)^2
-        return sqrt(K**2)
+        chi, b = self.root, self.c
+        self.kz = sqrt(K**2 - (chi/b)**2)
     
     def E_rho(self, rho, phi):
         ''' radial component of electric field evaluated at (rho,phi) - polar coordinates '''
-        m, b, chi = self.m, 1/self.c, self.root
-        return -1*chi/b*self.z_dash(chi/b*rho)*sin(m*phi)
+        m, b, chi, kz = self.m, 1./self.c, self.root, self.kz
+        return -1*kz*chi/b*self.z_dash(chi*rho)*sin(m*phi)
     
     def E_phi(self, rho, phi):
         ''' polar component of electric field evaluated at (rho,phi) - polar coordinates '''
-        m, b, chi = self.m, 1/self.c, self.root
-        return -1*m/rho*self.z(chi/b*rho)*cos(m*phi)
+        m, b, chi, kz = self.m, 1./self.c, self.root, self.kz
+        return -1*kz*m/rho*self.z(chi*rho)*cos(m*phi)
     
     
     def H_rho(self, rho, phi):
         ''' radial component of magnetic field '''
-        m, b, chi = self.m, 1/self.c, self.root
-        return m/rho*self.z(chi/b*rho)*cos(m*phi)
+        m, b, chi = self.m, self.c, self.root
+        return OMEGA*EPSILON*m/rho*self.z(chi*rho)*cos(m*phi)
     
     def H_phi(self, rho, phi):
         ''' polar component of magnetic field '''
-        m, b, chi = self.m, 1/self.c, self.root
-        return -1*chi/b*self.z_dash(chi/b*rho)*sin(m*phi)
+        m, b, chi = self.m, 1./self.c, self.root
+        return -OMEGA*EPSILON*chi/b*self.z_dash(chi*rho)*sin(m*phi)
         
     def guess_root(self,m,n,c):
         'Guess the root chi_mn for TM mode'
@@ -110,6 +113,9 @@ class TMmode:
         # If no guess is provided use the Marcuvitz formula to calculate approximate root
         else:
             self.root = self.guess_root(self.m, self.n, self.c)
+            
+        # update the kz now that we have a new root
+        self.update_kz()
                     
     def find_root(self):
         'find root using Newton method'
@@ -118,6 +124,9 @@ class TMmode:
             self.root = newton(f, self.root, maxiter=100)
         except RuntimeError:
             pass
+        
+        # update the kz
+        self.update_kz()
             
     def marcuvitz(self):
         'returns a string label and value for the root form tabulated in Marcuvitz'
@@ -125,7 +134,7 @@ class TMmode:
         root = (self.c-1.)*self.root
         return label, root
     
-    def plot_root(self, ax=None, Npoints=500, color='red', size=8):
+    def plot_root(self, ax=None, color='red', size=8):
         'plot calculated root'
         # convenient variables
         m, n, c, root = self.m, self.n, self.c, self.root
@@ -185,7 +194,7 @@ class TMmode:
         # plot the root function (plot last so as to keep pretty y range)
         self.rootplot.plot()
         
-    def plot_field(self, ax, E_color='red', H_color='green', n_rho=40, n_phi=20):
+    def plot_field(self, ax, E_color='red', H_color='green', n_rho=10, n_phi=100):
         ''' plots H field into ax (matplotlib.Axes class) 
             n_rho = number of different rho(radial) points to use
             n_phi = number of different phi(polar angle) points to use'''
@@ -201,8 +210,12 @@ class TMmode:
         ax = fig.add_subplot(111, projection='polar')
                         
         a = 1
-        b = 1*self.c
-        RHO, PHI = meshgrid(linspace(a,b,n_rho), linspace(0,2*pi,n_phi))
+        b = a*self.c
+        
+        rho = linspace(a,b,n_rho)
+        phi = linspace(0,2*pi,n_phi)
+        # meshgrid form of rho and phi
+        RHO, PHI = meshgrid(rho, phi)
         
         # plot the centre circle of the annulus
         color = fig.get_facecolor()
@@ -226,6 +239,12 @@ class TMmode:
         self.H_field = ax.quiver(PHI,RHO,H_x(RHO,PHI),H_y(RHO,PHI), color=H_color)
         # get rid of the radial and polar ticks
         ax.set_thetagrids([]), ax.set_rticks([])
+        
+        # testing: plot the E_rho at the inner and outer radius
+        print "outer radius Erho" 
+        print E_phi(b,phi).max()
+        print "inner radius Erho"
+        print E_phi(a,phi).max()
         
 class TEmode(TMmode, object):
     '''Contain a single TE wave guide mode, and methods to calculate important 
@@ -272,23 +291,24 @@ class TEmode(TMmode, object):
     
     def E_rho(self, rho, phi):
         ''' radial component of electric field evaluated at (rho,phi) - polar coordinates '''
-        m, b, chi = self.m, 1/self.c, self.root
-        return -m/rho*self.z(chi/b*rho)*cos(m*phi)
+        m, b, chi, kz = self.m, 1./self.c, self.root, self.kz
+        return -OMEGA*MU*m/rho*self.z(chi*rho)*cos(m*phi)
     
     def E_phi(self, rho, phi):
         ''' polar component of electric field evaluated at (rho,phi) - polar coordinates '''
-        m, b, chi = self.m, 1/self.c, self.root
-        return chi/b*self.z_dash(chi/b*rho)*sin(m*phi)
+        m, b, chi, kz = self.m, 1./self.c, self.root, self.kz
+        return OMEGA*MU*chi/b*self.z_dash(chi*rho)*sin(m*phi)
     
     def H_rho(self, rho, phi):
         ''' radial component of magnetic field '''
-        m, b, chi = self.m, 1/self.c, self.root
-        return -chi/b*self.z_dash(chi/b*rho)*sin(m*phi)
+        m, b, chi, kz = self.m, 1./self.c, self.root, self.kz
+        return -kz*chi/b*self.z_dash(chi*rho)*sin(m*phi)
     
     def H_phi(self, rho, phi):
         ''' polar component of magnetic field '''
-        m, b, chi = self.m, 1/self.c, self.root
-        return -m/rho*self.z(chi/b*rho)*cos(m*phi)
+        m, b, chi, kz = self.m, 1./self.c, self.root, self.kz
+        return -kz*m/rho*self.z(chi*rho)*cos(m*phi)
+        
 
 if __name__ == '__main__':
     
