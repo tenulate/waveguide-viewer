@@ -52,6 +52,8 @@ class WaveGuideViewer(QtGui.QMainWindow, Ui_WaveguideViewer_MainWindow):
         # when pressing "recalculate root" 
         QtCore.QObject.connect(self.recalculateRoot_pushButton, QtCore.
                                SIGNAL('clicked()'), self.click_recalculate_root)
+        QtCore.QObject.connect(self.recalculateRoot_pushButton, QtCore.
+                               SIGNAL('clicked()'), self.plot_field)
         # when pressing "enter" after editing the x range values 
         QtCore.QObject.connect(self.rootMinX_lineEdit, QtCore.
                                SIGNAL('returnPressed()'), self.set_new_x_range)
@@ -66,9 +68,9 @@ class WaveGuideViewer(QtGui.QMainWindow, Ui_WaveguideViewer_MainWindow):
         QtCore.QObject.connect(self.moreXPoints_pushButton, QtCore.
                                SIGNAL('clicked()'), self.click_more_x_points)
         
+        
         # Field plotting window
-        QtCore.QObject.connect(self.recalculateRoot_pushButton, QtCore.
-                               SIGNAL('clicked()'), self.plot_field)
+    
         QtCore.QObject.connect(self.E_field_checkBox, QtCore.
                                SIGNAL('stateChanged(int)'), self.click_field_checkbox)
         QtCore.QObject.connect(self.H_field_checkBox, QtCore.
@@ -150,10 +152,18 @@ class WaveGuideViewer(QtGui.QMainWindow, Ui_WaveguideViewer_MainWindow):
     def plot_field(self):
         ''' plot the field in the matplotlib axis '''
         self.field_ax.clear()
+        # how many points to plot
         n_phi = self.n_phi_spinBox.value()
         n_rho = self.n_rho_spinBox.value()
+        # plot the field
         self.mode.plot_field(self.field_ax, n_rho=n_rho, n_phi=n_phi)
-        self.field_canvas.draw()
+        # make we're only showing the desired fields
+        # click_field_checkbox replots the H and E fields, but only plots those 
+        # that have been checked off
+        self.click_field_checkbox()
+        
+        # Note a self.field_canvas.draw() is not necessary b/c click_field_checkbox
+        # already performs that action
          
     def click_recalculate_root(self):
         ''' what to do when recalculate root is clicked '''

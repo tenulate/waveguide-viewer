@@ -75,32 +75,39 @@ class TMmode:
     
     def update_kz(self):
         ''' wave number (2 pi lambda)^-1 in z direction '''
-        # NB c is ratio of outer radius to inner radius c=b/a
-        # In plots we will take inner radius (a) to be 1, therefore b = c
-        # kz^2 = k^2-(chi/b)^2
-        chi, b = self.root, self.c
-        self.kz = sqrt(K**2 - (chi/b)**2)
+        # In plots we will take inner radius (b) to be 1
+        # kz^2 = k^2-(chi/b)^2 = k^2-chi^2
+        chi = self.root
+        self.kz = sqrt(K**2 - chi**2)
     
     def E_rho(self, rho, phi):
         ''' radial component of electric field evaluated at (rho,phi) - polar coordinates '''
-        m, b, chi, kz = self.m, 1./self.c, self.root, self.kz
-        return -1*kz*chi/b*self.z_dash(chi*rho)*sin(m*phi)
+        m, chi, kz = self.m, self.root, self.kz
+        return -1*kz*chi*self.z_dash(chi*rho)*cos(m*phi)
     
     def E_phi(self, rho, phi):
         ''' polar component of electric field evaluated at (rho,phi) - polar coordinates '''
-        m, b, chi, kz = self.m, 1./self.c, self.root, self.kz
-        return -1*kz*m/rho*self.z(chi*rho)*cos(m*phi)
+        m, chi, kz = self.m, self.root, self.kz
+        return kz*m/rho*self.z(chi*rho)*sin(m*phi)
     
+    def E_z(self, rho, phi):
+        ''' Z component of electric field '''
+        m, chi, kz = self.m, self.root, self.kz
+        return chi**2*self.z(chi*rho)*cos(m*phi)    
     
     def H_rho(self, rho, phi):
         ''' radial component of magnetic field '''
-        m, b, chi = self.m, self.c, self.root
-        return OMEGA*EPSILON*m/rho*self.z(chi*rho)*cos(m*phi)
+        m, chi = self.m, self.root
+        return -1*OMEGA*EPSILON*m/rho*self.z(chi*rho)*sin(m*phi)
     
     def H_phi(self, rho, phi):
         ''' polar component of magnetic field '''
-        m, b, chi = self.m, 1./self.c, self.root
-        return -OMEGA*EPSILON*chi/b*self.z_dash(chi*rho)*sin(m*phi)
+        m, chi = self.m, self.root
+        return -1*OMEGA*EPSILON*chi*self.z_dash(chi*rho)*cos(m*phi)
+    
+    def H_z(self, rho, phi):
+        ''' z component of magnetic field '''
+        return 0
         
     def guess_root(self,m,n,c):
         'Guess the root chi_mn for TM mode'
@@ -286,23 +293,32 @@ class TEmode(TMmode, object):
     
     def E_rho(self, rho, phi):
         ''' radial component of electric field evaluated at (rho,phi) - polar coordinates '''
-        m, b, chi, kz = self.m, 1./self.c, self.root, self.kz
-        return -OMEGA*MU*m/rho*self.z(chi*rho)*cos(m*phi)
+        m, chi, kz = self.m, self.root, self.kz
+        return OMEGA*MU*m/rho*self.z(chi*rho)*sin(m*phi)
     
     def E_phi(self, rho, phi):
         ''' polar component of electric field evaluated at (rho,phi) - polar coordinates '''
-        m, b, chi, kz = self.m, 1./self.c, self.root, self.kz
-        return OMEGA*MU*chi/b*self.z_dash(chi*rho)*sin(m*phi)
+        m, chi, kz = self.m, self.root, self.kz
+        return OMEGA*MU*chi*self.z_dash(chi*rho)*cos(m*phi)
+    
+    def E_z(self, rho, phi):
+        ''' z component of Electric field '''
+        return 0
     
     def H_rho(self, rho, phi):
         ''' radial component of magnetic field '''
-        m, b, chi, kz = self.m, 1./self.c, self.root, self.kz
-        return -kz*chi/b*self.z_dash(chi*rho)*sin(m*phi)
+        m, chi, kz = self.m, self.root, self.kz
+        return -1*kz*chi*self.z_dash(chi*rho)*cos(m*phi)
     
     def H_phi(self, rho, phi):
         ''' polar component of magnetic field '''
-        m, b, chi, kz = self.m, 1./self.c, self.root, self.kz
-        return -kz*m/rho*self.z(chi*rho)*cos(m*phi)
+        m, chi, kz = self.m, self.root, self.kz
+        return kz*m/rho*self.z(chi*rho)*sin(m*phi)
+    
+    def H_z(self, rho, phi):
+        ''' z component of magnetic field '''
+        m, chi, kz = self.m, self.root, self.kz
+        return chi**2*self.z(chi*rho)*cos(m*phi)
         
 
 if __name__ == '__main__':
@@ -310,17 +326,23 @@ if __name__ == '__main__':
     # set parameters
     Nx = 200 # number of x values to plot
     c = 3.2 # ratio of outer to inner radius
-    n = 6
-    m = 3
+    n = 2
+    m = 0
     
     z = TEmode(m, n, c)
     z.set_root()
     z.find_root()
     
-    fig = plt.figure()
-    ax = fig.add_subplot(111)
+#    fig = plt.figure()
+#    ax = fig.add_subplot(111)
 
-    z.plot_root(ax=ax)
-    z.plot_root_equation(ax=ax)
+#    z.plot_root(ax=ax)
+#    z.plot_root_equation(ax=ax)
+
+    phi = linspace(0, 2*pi)
+    rho = linspace(1,c)
+    
+    print z.E_phi(rho,phi)
+    print z.E_rho(rho,phi)
 
     plt.show()
