@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'waveguide viewer.ui'
 #
-# Created: Thu Nov  1 00:04:35 2012
+# Created: Sun Nov  4 18:35:14 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -67,7 +67,7 @@ class Ui_WaveguideViewer_MainWindow(object):
         self.m_spinBox = QtGui.QSpinBox(self.selectMode_tab)
         self.m_spinBox.setMinimumSize(QtCore.QSize(67, 0))
         self.m_spinBox.setMaximum(100)
-        self.m_spinBox.setProperty("value", 4)
+        self.m_spinBox.setProperty("value", 3)
         self.m_spinBox.setObjectName(_fromUtf8("m_spinBox"))
         self.horizontalLayout_2.addWidget(self.m_spinBox)
         spacerItem1 = QtGui.QSpacerItem(30, 20, QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Minimum)
@@ -91,7 +91,7 @@ class Ui_WaveguideViewer_MainWindow(object):
         self.n_spinBox.setMinimumSize(QtCore.QSize(67, 0))
         self.n_spinBox.setMinimum(1)
         self.n_spinBox.setMaximum(100)
-        self.n_spinBox.setProperty("value", 5)
+        self.n_spinBox.setProperty("value", 1)
         self.n_spinBox.setObjectName(_fromUtf8("n_spinBox"))
         self.horizontalLayout_2.addWidget(self.n_spinBox)
         spacerItem2 = QtGui.QSpacerItem(30, 20, QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Minimum)
@@ -256,6 +256,10 @@ class Ui_WaveguideViewer_MainWindow(object):
         self.textBrowser_3.setMaximumSize(QtCore.QSize(256, 100))
         self.textBrowser_3.setObjectName(_fromUtf8("textBrowser_3"))
         self.verticalLayout_7.addWidget(self.textBrowser_3)
+        self.label_9 = QtGui.QLabel(self.tab)
+        self.label_9.setTextFormat(QtCore.Qt.RichText)
+        self.label_9.setObjectName(_fromUtf8("label_9"))
+        self.verticalLayout_7.addWidget(self.label_9)
         self.E_field_checkBox = QtGui.QCheckBox(self.tab)
         self.E_field_checkBox.setChecked(True)
         self.E_field_checkBox.setObjectName(_fromUtf8("E_field_checkBox"))
@@ -316,7 +320,7 @@ class Ui_WaveguideViewer_MainWindow(object):
         WaveguideViewer_MainWindow.setMenuBar(self.menubar)
 
         self.retranslateUi(WaveguideViewer_MainWindow)
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(WaveguideViewer_MainWindow)
 
     def retranslateUi(self, WaveguideViewer_MainWindow):
@@ -340,11 +344,11 @@ class Ui_WaveguideViewer_MainWindow(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">There are </span><span style=\" font-size:10pt; font-weight:600;\">2m </span><span style=\" font-size:10pt;\">nodes (where the field is zero) around the circumference of the annulus </span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-style:italic;\">(m = 0,1,2,3...)</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">n</span><span style=\" font-size:10pt;\"> </span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">There are</span><span style=\" font-size:10pt; font-weight:600;\"> n-1</span><span style=\" font-size:10pt;\"> nodes from the inner to outter radius </span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">There are</span><span style=\" font-size:10pt; font-weight:600;\"> n-1</span><span style=\" font-size:10pt;\"> nodes from the inner to outer radius </span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-style:italic;\">(n = 1,2,3,4...)</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">c</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">ratio of outter radius to inner radius of waveguide</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">ratio of outer radius to inner radius of waveguide</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">(c &gt; 1)</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
@@ -364,7 +368,7 @@ class Ui_WaveguideViewer_MainWindow(object):
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Calculate Waveguide Root</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">The tangential part of the electric field is required to be zero at a perfectly conducting metallic boundary. For given  values of </span><span style=\" font-size:10pt; font-weight:600;\">c</span><span style=\" font-size:10pt;\"> and </span><span style=\" font-size:10pt; font-weight:600;\">n</span><span style=\" font-size:10pt;\">, a unique root (reffered to by the Greek letter </span><span style=\" font-size:10pt; font-style:italic;\">chi</span><span style=\" font-size:10pt;\">) is needed to ensure the zero boundary condition.</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">The tangential part of the electric field is required to be zero at a perfectly conducting metallic boundary. For given  values of </span><span style=\" font-size:10pt; font-weight:600;\">c</span><span style=\" font-size:10pt;\"> and </span><span style=\" font-size:10pt; font-weight:600;\">n</span><span style=\" font-size:10pt;\">, a unique root (refered to by the Greek letter </span><span style=\" font-size:10pt; font-style:italic;\">chi</span><span style=\" font-size:10pt;\">) is needed to ensure the zero boundary condition.</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">For a given value of </span><span style=\" font-size:10pt; font-weight:600;\">n</span><span style=\" font-size:10pt;\">, </span><span style=\" font-size:10pt; font-style:italic;\">chi</span><span style=\" font-size:10pt;\"> should be the n</span><span style=\" font-size:10pt; vertical-align:super;\">th</span><span style=\" font-size:10pt;\"> root of the graph. </span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Click and drag the root of the graph to correct it, then click &quot;recalculate root&quot;</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
@@ -383,6 +387,7 @@ class Ui_WaveguideViewer_MainWindow(object):
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Field Plot</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Electric Field Vector plot</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_9.setText(QtGui.QApplication.translate("WaveguideViewer_MainWindow", "<b>Vector Field Plot</b>", None, QtGui.QApplication.UnicodeUTF8))
         self.E_field_checkBox.setText(QtGui.QApplication.translate("WaveguideViewer_MainWindow", "Electric Field", None, QtGui.QApplication.UnicodeUTF8))
         self.H_field_checkBox.setText(QtGui.QApplication.translate("WaveguideViewer_MainWindow", "Magnetic Field", None, QtGui.QApplication.UnicodeUTF8))
         self.label_7.setText(QtGui.QApplication.translate("WaveguideViewer_MainWindow", "Number of radial points", None, QtGui.QApplication.UnicodeUTF8))

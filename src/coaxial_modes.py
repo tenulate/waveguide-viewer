@@ -52,9 +52,10 @@ class TMmode:
         self.kz = 0     # z component of the wavenumber k
         self.set_root() # sets initial root to something reasonable
         self.drag = None    # information to drag root in plot
+        
         self.E_field = None # The quiver / arrow plot of the Electric field
         self.H_field = None # "                            " Magnetic field
-                
+                        
     def __str__(self):
         return "<%s mode>  m = %s, n = %s, c = %s" % (self.mode, self.m, self.n, self.c)
     
@@ -200,8 +201,15 @@ class TMmode:
                      %(self.mode, self.m, self.n, self.c))
         # plot the root function (plot last so as to keep pretty y range)
         self.rootplot.plot()
-        
-    def plot_field(self, ax, E_color='red', H_color='green', n_rho=15, n_phi=60):
+    
+    def get_field_plot_title(self):
+        ''' the title given to the vector field plot '''
+        return '%s %i,%i mode'%(self.mode, self.m, self.n) 
+   
+    def plot_field(self, ax, 
+                   E_color='blue', H_color='orange', 
+                   axis_bgcolor='white', fig_facecolor='gray',
+                   n_rho=15, n_phi=60):
         ''' plots H field into ax (matplotlib.Axes class) 
             n_rho = number of different rho(radial) points to use
             n_phi = number of different phi(polar angle) points to use'''
@@ -213,44 +221,54 @@ class TMmode:
             ''' if a figure is already given need to clear it and make sure it's polar projection '''
             fig = ax.figure
             fig.clear()
-            
-        ax = fig.add_subplot(111, projection='polar')
-        ax.set_title('%s %i,%i mode'%(self.mode, self.m, self.n))
-                        
-        a = 1
-        b = a*self.c
         
-        rho = linspace(a,b,n_rho)
+        fig.set_facecolor(fig_facecolor)    
+        ax = fig.add_subplot(111, projection='polar', 
+                             axis_bgcolor=axis_bgcolor)
+        ax.set_title(self.get_field_plot_title())
+                        
+        b = 1           # inner radius   
+        a = b*self.c    # outer radius
+        
+        rho = linspace(b,a,n_rho)
         phi = linspace(0,2*pi,n_phi)
         # meshgrid form of rho and phi
         RHO, PHI = meshgrid(rho, phi)
         
         # plot the centre circle of the annulus
-        color = fig.get_facecolor()
-        rectangle = plt.Rectangle((0,0), pi/2, a, linewidth=2, alpha=0.4)
-        ax.add_patch(rectangle)
+        circle_N = 100
+        circle_phi = linspace(0,2*pi,circle_N)
+        circle_inner_radius = circle_N*[b]
+        circle_outer_radius = circle_N*[a]
+        circle_centre = circle_N*[0]
+        ax.fill_between(circle_phi, circle_centre, circle_inner_radius,
+                        facecolor=fig_facecolor, alpha=1.0, linewidth=0)
+        ax.plot(circle_phi, circle_inner_radius, 
+                circle_phi, circle_outer_radius,
+                linewidth=2, color='black')
         
         # Vector field in rho, phi basis
         H_rho = self.H_rho
         H_phi = self.H_phi
         E_rho = self.E_rho
         E_phi = self.E_phi
-        
+
         # vector field in Cartesian x,y basis, calculated from rho, phi basis
-        E_x = lambda rho,phi: E_rho(rho,phi)*cos(phi)-E_phi(rho,phi)*sin(phi)
-        E_y = lambda rho,phi: E_rho(rho,phi)*sin(phi)+E_phi(rho,phi)*cos(phi)
-        H_x = lambda rho,phi: H_rho(rho,phi)*cos(phi)-H_phi(rho,phi)*sin(phi)
-        H_y = lambda rho,phi: H_rho(rho,phi)*sin(phi)+H_phi(rho,phi)*cos(phi)
-        
+        E_x = E_rho(RHO,PHI)*cos(PHI)-E_phi(RHO,PHI)*sin(PHI)
+        E_y = E_rho(RHO,PHI)*sin(PHI)+E_phi(RHO,PHI)*cos(PHI)
+        H_x = H_rho(RHO,PHI)*cos(PHI)-H_phi(RHO,PHI)*sin(PHI)
+        H_y = H_rho(RHO,PHI)*sin(PHI)+H_phi(RHO,PHI)*cos(PHI)
         # make the field plots
-        self.E_field = ax.quiver(PHI,RHO,E_x(RHO,PHI),E_y(RHO,PHI), color=E_color)
-        self.H_field = ax.quiver(PHI,RHO,H_x(RHO,PHI),H_y(RHO,PHI), color=H_color)
+        self.E_field = ax.quiver(PHI,RHO,E_x,E_y, color=E_color)
+        self.H_field = ax.quiver(PHI,RHO,H_x,H_y, color=H_color)
+        
         # get rid of the radial and polar ticks
         ax.set_thetagrids([]), ax.set_rticks([])
+
         
 class TEmode(TMmode, object):
     '''Contain a single TE wave guide mode, and methods to calculate important 
-        quantitites'''
+        quantities'''
     
     def __init__(self,m,n,c):
         # Initialize the super class
@@ -319,30 +337,66 @@ class TEmode(TMmode, object):
         ''' z component of magnetic field '''
         m, chi, kz = self.m, self.root, self.kz
         return chi**2*self.z(chi*rho)*cos(m*phi)
-        
-
+    
+class TEMmode(TMmode, object):
+    ''' contain a single TEM mode information and methods to calculate important
+        quantities '''
+    
+    def __init__(self,c):
+        self.c = c
+        self.mode = 'TEM'
+        self.field_plot_title = '%s mode'%self.mode
+    
+    def __str__(self): 
+        return '%s mode, c=%s'%(self.mode, self.c)
+    
+    def get_field_plot_title(self):
+        ''' title to be used when plotting the vector fields '''
+        return '%s mode' % self.mode
+    def E_rho(self, rho, phi):
+        ''' radial component of electric field '''
+        return -1*K/rho
+    
+    def E_phi(self, rho, phi):
+        ''' polar component of Electric field '''
+        return 0
+    
+    def E_z(self, rho, phi):
+        ''' z component of electric field '''
+        return 0
+    
+    def H_rho(self, rho, phi):
+        ''' radial component of magnetic field '''
+        return 0
+    
+    def H_phi(self, rho, phi):
+        ''' polar component of magnetic field '''
+        return -OMEGA*EPSILON/rho
+    
+    def H_z(self, rho, phi):
+        ''' z component of magnetic field '''
+        return 0
+    
+    
 if __name__ == '__main__':
     
     # set parameters
     Nx = 200 # number of x values to plot
     c = 3.2 # ratio of outer to inner radius
     n = 2
-    m = 0
+    m = 1
     
     z = TEmode(m, n, c)
     z.set_root()
     z.find_root()
     
-#    fig = plt.figure()
-#    ax = fig.add_subplot(111)
-
-#    z.plot_root(ax=ax)
-#    z.plot_root_equation(ax=ax)
-
-    phi = linspace(0, 2*pi)
-    rho = linspace(1,c)
+    z = TEMmode(c)
     
-    print z.E_phi(rho,phi)
-    print z.E_rho(rho,phi)
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+
+    z.plot_field(ax)
+
+
 
     plt.show()

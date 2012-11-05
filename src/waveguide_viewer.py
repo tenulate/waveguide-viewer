@@ -5,7 +5,7 @@
 from qtdesigner import Ui_WaveguideViewer_MainWindow
 
 # for coaxial modes logic
-from coaxial_modes import TMmode, TEmode
+from coaxial_modes import TMmode, TEmode, TEMmode
 
 # Numpy module
 import numpy as np
@@ -47,6 +47,9 @@ class WaveGuideViewer(QtGui.QMainWindow, Ui_WaveguideViewer_MainWindow):
                                SIGNAL('clicked()'), self.click_mode_ok)
         QtCore.QObject.connect(self.mode_CancelButton, QtCore.
                                SIGNAL('clicked()'), self.click_mode_cancel)
+        
+        QtCore.QObject.connect(self.mode_comboBox, QtCore.
+                               SIGNAL('currentIndexChanged(int)'), self.changing_mode_combobox)
                 
         # Root Calculator window
         # when pressing "recalculate root" 
@@ -96,8 +99,8 @@ class WaveGuideViewer(QtGui.QMainWindow, Ui_WaveguideViewer_MainWindow):
             self.mode = TEmode(m,n,c)
         elif index == 1:
             self.mode = TMmode(m,n,c)
-        else:
-            self.mode = TEmode(m,n,c)
+        elif index == 2:
+            self.mode = TEMmode(c)
     
     def plot_root(self):
         ''' plots the radial root equation in the root equation axis '''
@@ -211,15 +214,25 @@ class WaveGuideViewer(QtGui.QMainWindow, Ui_WaveguideViewer_MainWindow):
         ''' what to do when clicking "OK" for the mode selection screen 
             - change current mode information, goto plot to find root'''
         
-        # disconnect the previous signal / slot for the old mode
-        QtCore.QObject.disconnect(self.recalculateRoot_pushButton, 
-                                  QtCore.SIGNAL('clicked()'), 
-                                  self.mode.recalculate_root)
-        # need to disconnect the matplotlib calls for mode
-        self.mode.drag.disconnect()
+        # if the previous mode was TE or TM then we need to disconnect all 
+        # the events associated with finding the roots of their equations
+        if self.mode.mode is not 'TEM':
+            # disconnect the previous signal / slot for the old mode
+            QtCore.QObject.disconnect(self.recalculateRoot_pushButton, 
+                                      QtCore.SIGNAL('clicked()'), 
+                                      self.mode.recalculate_root)
+            # need to disconnect the matplotlib calls for mode
+            self.mode.drag.disconnect()
         
-        # update the mode info, and plot new radial equation
+        # update the mode info
         self.set_waveguide_mode()
+        
+        # if it's a TEM mode selected then no need to plot a radial equation
+        # just plot the E and H fields. 
+        if self.mode.mode is 'TEM':
+            self.plot_field()
+            self.tabWidget.setCurrentIndex(2)
+            return
         
         # connect signal / slot for the new updated mode
         QtCore.QObject.connect(self.recalculateRoot_pushButton, QtCore.
@@ -246,8 +259,27 @@ class WaveGuideViewer(QtGui.QMainWindow, Ui_WaveguideViewer_MainWindow):
             self.mode_comboBox.setCurrentIndex(0)
         elif mode_type == 'TM':
             self.mode_comboBox.setCurrentIndex(1)
-        else:
+        elif mode_type == 'TEM':
             self.mode_comboBox.setCurrentIndex(2)
+        else:
+            self.mode_comboBox.setCurrentIndex(0)
+            
+    def changing_mode_combobox(self):
+        ''' what to do when changing the mode combo box
+            if a TE or TM mode is selected, then the m and n spin boxes should be
+            enabled.
+            If a TEM mode is selected, they should be disabled as TEM mode doesn't have
+            any m,n values associated with it '''
+        index = self.mode_comboBox.currentIndex()
+        
+        if index == 2:
+            ''' TEM mode is chosen, make m,n disabled '''
+            self.m_spinBox.setEnabled(False)
+            self.n_spinBox.setEnabled(False)
+            
+        else:
+            self.m_spinBox.setEnabled(True)
+            self.n_spinBox.setEnabled(True)
         
     def click_field_checkbox(self):
         ''' what to do when clicking on the E_field and H_field check boxes in the

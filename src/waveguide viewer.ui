@@ -21,7 +21,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="selectMode_tab">
        <attribute name="title">
@@ -62,11 +62,11 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;There are &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;2m &lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;nodes (where the field is zero) around the circumference of the annulus &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-style:italic;&quot;&gt;(m = 0,1,2,3...)&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;n&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;There are&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt; n-1&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; nodes from the inner to outter radius &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;There are&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt; n-1&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; nodes from the inner to outer radius &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-style:italic;&quot;&gt;(n = 1,2,3,4...)&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;c&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;ratio of outter radius to inner radius of waveguide&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;ratio of outer radius to inner radius of waveguide&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;(c &amp;gt; 1)&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -156,7 +156,7 @@ p, li { white-space: pre-wrap; }
                <number>100</number>
               </property>
               <property name="value">
-               <number>4</number>
+               <number>3</number>
               </property>
              </widget>
             </item>
@@ -219,7 +219,7 @@ p, li { white-space: pre-wrap; }
                <number>100</number>
               </property>
               <property name="value">
-               <number>5</number>
+               <number>1</number>
               </property>
              </widget>
             </item>
@@ -450,7 +450,7 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Calculate Waveguide Root&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;The tangential part of the electric field is required to be zero at a perfectly conducting metallic boundary. For given  values of &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;c&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; and &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;n&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;, a unique root (reffered to by the Greek letter &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-style:italic;&quot;&gt;chi&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;) is needed to ensure the zero boundary condition.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;The tangential part of the electric field is required to be zero at a perfectly conducting metallic boundary. For given  values of &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;c&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; and &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;n&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;, a unique root (refered to by the Greek letter &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-style:italic;&quot;&gt;chi&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;) is needed to ensure the zero boundary condition.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;For a given value of &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;n&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-style:italic;&quot;&gt;chi&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; should be the n&lt;/span&gt;&lt;span style=&quot; font-size:10pt; vertical-align:super;&quot;&gt;th&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; root of the graph. &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Click and drag the root of the graph to correct it, then click &amp;quot;recalculate root&amp;quot;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -654,6 +654,16 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item>
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string>&lt;b&gt;Vector Field Plot&lt;/b&gt;</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::RichText</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QCheckBox" name="E_field_checkBox">
             <property name="text">
              <string>Electric Field</string>
@@ -769,9 +779,6 @@ p, li { white-space: pre-wrap; }
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <zorder></zorder>
-          <zorder>horizontalLayoutWidget_2</zorder>
-          <zorder>horizontalLayoutWidget_2</zorder>
          </widget>
         </item>
        </layout>
