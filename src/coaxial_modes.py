@@ -108,7 +108,10 @@ class TMmode:
     
     def H_z(self, rho, phi):
         ''' z component of magnetic field '''
-        return 0
+        # need to return a numpy array of zeros, not just a single int 0 incase
+        # rho and phi are meshgrid arrays
+        
+        return zeros(rho.shape)
         
     def guess_root(self,m,n,c):
         'Guess the root chi_mn for TM mode'
@@ -262,6 +265,7 @@ class TMmode:
         self.E_field = ax.quiver(PHI,RHO,E_x,E_y, color=E_color)
         self.H_field = ax.quiver(PHI,RHO,H_x,H_y, color=H_color)
         
+
         # get rid of the radial and polar ticks
         ax.set_thetagrids([]), ax.set_rticks([])
 
@@ -321,7 +325,7 @@ class TEmode(TMmode, object):
     
     def E_z(self, rho, phi):
         ''' z component of Electric field '''
-        return 0
+        return zeros(rho.shape)
     
     def H_rho(self, rho, phi):
         ''' radial component of magnetic field '''
@@ -383,19 +387,19 @@ if __name__ == '__main__':
     # set parameters
     Nx = 200 # number of x values to plot
     c = 3.2 # ratio of outer to inner radius
-    n = 2
-    m = 1
+    n = 1
+    m = 0
     
     z = TEmode(m, n, c)
     z.set_root()
     z.find_root()
     
-    z = TEMmode(c)
+#    z = TEMmode(c)
     
     fig = plt.figure()
     ax = fig.add_subplot(111)
 
-    z.plot_field(ax)
+    z.plot_field(ax, n_phi=100, n_rho=100)
 
 
 

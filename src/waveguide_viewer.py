@@ -170,7 +170,18 @@ class WaveGuideViewer(QtGui.QMainWindow, Ui_WaveguideViewer_MainWindow):
          
     def click_recalculate_root(self):
         ''' what to do when recalculate root is clicked '''
+        
+        # calculate the new root from the graph
         self.mode.recalculate_root()
+        
+        # if this root is out of range of the x axis, update the x axis
+        root = self.mode.root
+        xmin, xmax = self.root_ax.get_xlim()
+        if root > xmax:
+            new_xmax = 1.1*root
+            self.mode.rootplot.set_xlim(xmin, new_xmax)
+            self.rootMaxX_lineEdit.setText(str(new_xmax).strip('[]'))
+            
         self.mode.drag.draw()
         
     def click_more_x_points(self):
@@ -296,7 +307,6 @@ class WaveGuideViewer(QtGui.QMainWindow, Ui_WaveguideViewer_MainWindow):
             self.mode.H_field.set_visible(True)
         else:
             self.mode.H_field.set_visible(False)
-        
         
         self.field_canvas.draw()
           
